@@ -44,6 +44,9 @@ export class Compiler {
     new Watcher(this.vm, name, (value) => {
       this.modelUpdater(el, value);
     });
+    el.addEventListener("input", (e) => {
+      this.vm[name] = e.target.value;
+    });
   }
   updateText(el: Element, value: string) {
     el.nodeValue = value;
