@@ -1,4 +1,5 @@
 import { Vue } from "../core";
+import { Watcher } from "../core/Watcher";
 
 export class Compiler {
   el: Element;
@@ -33,10 +34,16 @@ export class Compiler {
     content.match(reg);
     const name = RegExp.$1;
     this.updateText(el, this.vm[name]);
+    new Watcher(this.vm, name, (value) => {
+      this.updateText(el, value);
+    });
   }
   compileModel(el: Element) {
-    const name = el.getAttribute("v-model");
+    const name = el.getAttribute("v-model") as string;
     this.modelUpdater(el, this.vm[name]);
+    new Watcher(this.vm, name, (value) => {
+      this.modelUpdater(el, value);
+    });
   }
   updateText(el: Element, value: string) {
     el.nodeValue = value;

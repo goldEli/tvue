@@ -1,4 +1,5 @@
 import { PlainObject } from "../../type";
+import { Dep } from "../Dep";
 
 export class Observer {
   constructor(data: PlainObject) {
@@ -16,17 +17,20 @@ export class Observer {
 
   defineReactive(data: PlainObject, key: string, value: string) {
     this.walk(data[key]);
+    const dep = new Dep();
     Object.defineProperty(data, key, {
       enumerable: true,
       configurable: true,
       get() {
-        console.log("get", key, value);
+        console.log("get", Dep.target);
 
+        Dep.target && dep.add(Dep.target);
         return value;
       },
       set(v) {
         console.log("set", key, v);
         value = v;
+        dep.notify();
       }
     });
   }

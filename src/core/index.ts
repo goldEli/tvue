@@ -20,11 +20,9 @@ export class Vue {
         enumerable: true,
         configurable: true,
         get() {
-          console.log("vue get", value);
-          return value;
+          return data[key];
         },
         set(v) {
-          console.log("vue set", v);
           data[key] = v;
         }
       });
