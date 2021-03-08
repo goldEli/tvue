@@ -1,6 +1,6 @@
 export interface VueConfig {
   el: Element;
-  data?: PlainObject;
+  data: PlainObject;
   // beforeCreate?: () => void;
   // created?: () => void;
   // mounted?: () => void;

@@ -1,5 +1,6 @@
 import { Compiler } from "../Compiler";
-import { VueConfig } from "../type";
+import { PlainObject, VueConfig } from "../type";
+import { Observer } from "./Observer";
 
 export class Vue {
   data: VueConfig["data"] = {};
@@ -8,19 +9,24 @@ export class Vue {
   constructor(options: VueConfig) {
     this.data = options.data;
     this.el = options.el;
-    this.handleProxy();
+    new Observer(this.data);
+    this.handleProxy(this.data);
     new Compiler(this.el, this);
   }
-  handleProxy() {
-    Object.keys(this.data).forEach((key) => {
-      const value = this.data[key];
+  handleProxy(data: PlainObject) {
+    Object.keys(data).forEach((key) => {
+      let value = data[key];
       Object.defineProperty(this, key, {
         enumerable: true,
         configurable: true,
         get() {
+          console.log("vue get", value);
           return value;
         },
-        set() {}
+        set(v) {
+          console.log("vue set", v);
+          data[key] = v;
+        }
       });
     });
   }

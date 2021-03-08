@@ -3,7 +3,7 @@
 // import { Wachter } from "./watcher";
 import { Vue } from "./core";
 
-new Vue({
+const vue = new Vue({
   el: document.querySelector("#app") as Element,
   data: {
     inputValue: "123"
@@ -11,3 +11,7 @@ new Vue({
 });
 
 // console.log(data);
+setTimeout(() => {
+  console.log("changeValue", vue.inputValue);
+  vue.inputValue = "111";
+}, 500);
