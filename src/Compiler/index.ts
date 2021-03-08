@@ -32,12 +32,11 @@ export class Compiler {
     const reg = /\{\{(.*)\}\}/;
     content.match(reg);
     const name = RegExp.$1;
-    console.log(this.vm.data, name);
-    this.updateText(el, this.vm.data[name]);
+    this.updateText(el, this.vm[name]);
   }
   compileModel(el: Element) {
     const name = el.getAttribute("v-model");
-    this.modelUpdater(el, this.vm.data[name]);
+    this.modelUpdater(el, this.vm[name]);
   }
   updateText(el: Element, value: string) {
     el.nodeValue = value;
