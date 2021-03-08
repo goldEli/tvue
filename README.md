@@ -1,2 +1,4 @@
-# tvue
-Created with CodeSandbox
+### toy vue
+
+* data reactive
+* v-model
